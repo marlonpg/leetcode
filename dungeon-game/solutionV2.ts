@@ -1,38 +1,21 @@
 function calculateMinimumHP(dungeon: number[][]): number {
     const rows = dungeon.length;
     const cols = dungeon[0].length;
-    const arrayMinValue: number[] = [];
 
-    function dfs(r: number, c: number, currentSum: number, maxHealthNeeded: number): void {
-        // Out of bounds
-        if (r >= rows || c >= cols) {
-            return;
+    // Create a DP table with the same dimensions
+    const dp: number[][] = Array.from({ length: rows + 1 }, () =>
+        Array(cols + 1).fill(Infinity)
+    );
+
+    dp[rows][cols - 1] = 1;
+    dp[rows - 1][cols] = 1;
+
+    for (let r = rows - 1; r >= 0; r--) {
+        for (let c = cols - 1; c >= 0; c--) {
+            const minHealthOnExit = Math.min(dp[r + 1][c], dp[r][c + 1]);
+            dp[r][c] = Math.max(1, minHealthOnExit - dungeon[r][c]);
         }
-        
-        currentSum += dungeon[r][c];
-
-        if(maxHealthNeeded > currentSum) {
-            maxHealthNeeded = currentSum;
-        }
-        // Reached bottom-right corner
-        if (r === rows - 1 && c === cols - 1) {
-            arrayMinValue.push(maxHealthNeeded);
-            return;
-        }
-
-        // Move right
-        dfs(r, c + 1, currentSum, maxHealthNeeded);
-
-        // Move down
-        dfs(r + 1, c, currentSum, maxHealthNeeded);
     }
 
-    dfs(0, 0, 0, 0);
-    let result = Math.max(...arrayMinValue);
-    if(result >= 0) {
-        return 1;
-    } else {
-        return (result * -1) + 1
-    }
+    return dp[0][0];
 }
-

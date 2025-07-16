@@ -1,8 +1,9 @@
-function calculateMinimumHP(dungeon: number[][]): number {
+export function calculateMinimumHP(dungeon: number[][]): number {
     const rows = dungeon.length;
     const cols = dungeon[0].length;
     const arrayMinValue: number[] = [];
 
+    // Depth-first search to explore all paths
     function dfs(r: number, c: number, currentSum: number, maxHealthNeeded: number): void {
         // Out of bounds
         if (r >= rows || c >= cols) {

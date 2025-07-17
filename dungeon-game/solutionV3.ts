@@ -1,4 +1,4 @@
-function calculateMinimumHP(dungeon: number[][]): number {
+export function calculateMinimumHP(dungeon: number[][]): number {
     const rows = dungeon.length;
     const cols = dungeon[0].length;
 

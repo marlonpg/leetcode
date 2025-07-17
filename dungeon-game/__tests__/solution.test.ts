@@ -1,4 +1,4 @@
-import { calculateMinimumHP } from '../solution';
+import { calculateMinimumHP } from '../solutionV2';
 
 describe('calculateMinimumHP', () => {
   it('handles example 1', () => {
@@ -32,5 +32,13 @@ describe('calculateMinimumHP', () => {
     expect(calculateMinimumHP([[0]])).toBe(1);
     expect(calculateMinimumHP([[-5]])).toBe(6);
     expect(calculateMinimumHP([[5]])).toBe(1);
+  });
+
+  it('throws RangeError for all negative values in 1000x1000', () => {
+    // Create a 1000x1000 dungeon filled with -1
+    const dungeon = Array.from({ length: 1000 }, () =>
+      Array.from({ length: 1000 }, () => -1)
+    );
+    expect(calculateMinimumHP(dungeon)).toBe(2000);
   });
 });

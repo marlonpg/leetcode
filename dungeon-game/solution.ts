@@ -13,7 +13,7 @@
 export function calculateMinimumHP(dungeon: number[][]): number {
     const rows = dungeon.length;
     const cols = dungeon[0].length;
-    const arrayMinValue: number[] = [];
+    let best = -Infinity; // Track the maximum min-health along any path
 
     // Depth-first search to explore all paths
     function dfs(r: number, c: number, currentSum: number, maxHealthNeeded: number): void {
@@ -29,7 +29,9 @@ export function calculateMinimumHP(dungeon: number[][]): number {
         }
         // Reached bottom-right corner
         if (r === rows - 1 && c === cols - 1) {
-            arrayMinValue.push(maxHealthNeeded);
+            if (maxHealthNeeded > best) {
+                best = maxHealthNeeded;
+            }
             return;
         }
 
@@ -41,11 +43,10 @@ export function calculateMinimumHP(dungeon: number[][]): number {
     }
 
     dfs(0, 0, 0, 0);
-    let result = Math.max(...arrayMinValue);
-    if(result >= 0) {
+    if (best >= 0) {
         return 1;
     } else {
-        return (result * -1) + 1
+        return -best + 1;
     }
 }
 

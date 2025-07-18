@@ -1,4 +1,4 @@
-import { calculateMinimumHP } from '../solutionV2';
+import { calculateMinimumHP } from '../solution';
 
 describe('calculateMinimumHP', () => {
   it('handles example 1', () => {
@@ -41,4 +41,5 @@ describe('calculateMinimumHP', () => {
     );
     expect(calculateMinimumHP(dungeon)).toBe(2000);
   });
+
 });
